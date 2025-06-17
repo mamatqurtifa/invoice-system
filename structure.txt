@@ -1,0 +1,107 @@
+resources/views/
+├── admin/ -------------------------------------------------------------------------------------------------ADMIN DONE
+│   ├── dashboard.blade.php
+│   ├── users/
+│   │   ├── index.blade.php
+│   │   ├── create.blade.php
+│   │   ├── edit.blade.php
+│   │   └── show.blade.php
+│   ├── organizations/
+│   │   ├── index.blade.php
+│   │   ├── create.blade.php
+│   │   ├── edit.blade.php
+│   │   └── show.blade.php
+│   ├── couriers/
+│   │   ├── index.blade.php
+│   │   ├── create.blade.php
+│   │   ├── edit.blade.php
+│   │   └── show.blade.php
+│   └── invoices/
+│       ├── index.blade.php
+│       └── show.blade.php
+├── organization/
+│   ├── dashboard.blade.php
+│   ├── profile/
+│   │   ├── index.blade.php
+│   │   └── edit.blade.php
+│   ├── projects/
+│   │   ├── index.blade.php
+│   │   ├── create.blade.php
+│   │   ├── edit.blade.php
+│   │   ├── show.blade.php
+│   │   └── add-products.blade.php
+│   ├── products/
+│   │   ├── index.blade.php
+│   │   ├── create.blade.php
+│   │   ├── edit.blade.php
+│   │   └── show.blade.php
+│   ├── customers/
+│   │   ├── index.blade.php
+│   │   ├── create.blade.php
+│   │   ├── edit.blade.php
+│   │   ├── show.blade.php
+│   │   └── import.blade.php
+│   ├── payment-methods/
+│   │   ├── index.blade.php
+│   │   ├── create.blade.php
+│   │   ├── edit.blade.php
+│   │   └── show.blade.php
+│   ├── invoice-templates/
+│   │   ├── index.blade.php
+│   │   ├── create.blade.php
+│   │   ├── edit.blade.php
+│   │   ├── show.blade.php
+│   │   └── preview.blade.php
+│   ├── orders/
+│   │   ├── index.blade.php
+│   │   ├── create.blade.php
+│   │   ├── edit.blade.php
+│   │   └── show.blade.php
+│   ├── invoices/
+│   │   ├── index.blade.php
+│   │   ├── show.blade.php
+│   │   └── edit.blade.php
+│   ├── discounts/
+│   │   ├── index.blade.php
+│   │   ├── create.blade.php
+│   │   ├── edit.blade.php
+│   │   └── show.blade.php
+│   ├── taxes/
+│   │   ├── index.blade.php
+│   │   ├── create.blade.php
+│   │   ├── edit.blade.php
+│   │   └── show.blade.php
+│   └── reports/
+│       ├── index.blade.php
+│       ├── create.blade.php
+│       ├── show.blade.php
+│       └── sales-summary.blade.php
+├── auth/
+│   ├── login.blade.php
+│   ├── register.blade.php
+│   ├── forgot-password.blade.php
+│   └── reset-password.blade.php
+├── components/
+│   ├── application-logo.blade.php
+│   ├── button.blade.php
+│   ├── card.blade.php
+│   ├── dropdown.blade.php
+│   ├── form/
+│   │   ├── input.blade.php
+│   │   ├── select.blade.php
+│   │   ├── textarea.blade.php
+│   │   └── checkbox.blade.php
+│   ├── table.blade.php
+│   ├── badge.blade.php
+│   ├── modal.blade.php
+│   ├── alert.blade.php
+│   └── pagination.blade.php
+├── layouts/
+│   ├── app.blade.php
+│   ├── admin.blade.php
+│   ├── organization.blade.php
+│   ├── guest.blade.php
+│   └── navigation.blade.php
+├── pdf/
+│   └── invoice.blade.php
+└── welcome.blade.php
