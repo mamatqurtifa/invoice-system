@@ -8,96 +8,188 @@
         ];
     @endphp
     
-    <div class="max-w-3xl mx-auto">
-        <div class="bg-white rounded-xl shadow-sm overflow-hidden mb-6">
-            <div class="px-6 py-5 border-b border-gray-200">
-                <h3 class="text-lg font-medium text-gray-900">
-                    Import Customers
-                </h3>
-            </div>
-            
-            <div class="p-6">
+    <div class="mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between">
+        <div>
+            <h2 class="text-2xl font-bold text-gray-900">Import Customers</h2>
+            <p class="mt-1 text-sm text-gray-600">Bulk import customers from a CSV or Excel file</p>
+        </div>
+    </div>
+    
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <!-- Left: Import Form -->
+        <div class="lg:col-span-2">
+            <x-card>
                 <form action="{{ route('organization.customers.import') }}" method="POST" enctype="multipart/form-data" class="space-y-6">
                     @csrf
                     
-                    <div>
-                        <label for="csv_file" class="block text-sm font-medium text-gray-700">CSV File <span class="text-red-500">*</span></label>
-                        <div class="mt-1 flex items-center">
-                            <input type="file" name="csv_file" id="csv_file" accept=".csv,.txt" required
-                                class="block w-full text-sm file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-sky-50 file:text-sky-700 hover:file:bg-sky-100">
-                        </div>
-                        @error('csv_file')
-                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                        @enderror
-                    </div>
+                    @if(session('success'))
+                        <x-alert type="success" :dismissible="true">
+                            {{ session('success') }}
+                        </x-alert>
+                    @endif
                     
-                    <div>
-                        <h4 class="text-sm font-medium text-gray-900 mb-2">CSV Format Requirements:</h4>
-                        <div class="bg-gray-50 rounded-lg p-4 text-sm text-gray-600">
-                            <p class="mb-2">Your CSV file should have the following columns:</p>
-                            <ul class="list-disc list-inside space-y-1">
-                                <li><span class="font-medium">name</span> - Required</li>
-                                <li><span class="font-medium">email</span> - Optional</li>
-                                <li><span class="font-medium">phone_number</span> - Optional</li>
-                                <li><span class="font-medium">address</span> - Optional</li>
+                    @if(session('error'))
+                        <x-alert type="error" :dismissible="true">
+                            {{ session('error') }}
+                        </x-alert>
+                    @endif
+                    
+                    @if($errors->importCustomers->any())
+                        <x-alert type="error" :dismissible="true">
+                            <ul class="list-disc list-inside">
+                                @foreach($errors->importCustomers->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
                             </ul>
-                            <p class="mt-2">The first row should be the column headers exactly as shown above.</p>
-                        </div>
+                        </x-alert>
+                    @endif
+                    
+                    <div>
+                        <h3 class="text-lg font-medium text-gray-900 mb-4">Upload File</h3>
+                        
+                        <x-form.input 
+                            type="file"
+                            id="file"
+                            name="file"
+                            label="CSV or Excel File"
+                            accept=".csv, .xlsx"
+                            help-text="Accepted formats: CSV (.csv), Excel (.xlsx)"
+                            required
+                        />
                     </div>
                     
-                    <!-- Example Template -->
-                    <div>
-                        <h4 class="text-sm font-medium text-gray-900 mb-2">Example CSV:</h4>
-                        <div class="bg-gray-50 rounded-lg p-4 overflow-auto">
-                            <pre class="text-xs text-gray-600">name,email,phone_number,address
-John Doe,john@example.com,081234567890,"123 Main St, City"
-Jane Smith,jane@example.com,082345678901,"456 Oak St, Town"</pre>
-                        </div>
-                        <div class="mt-2 text-right">
-                            <a href="#" class="text-sm text-sky-600 hover:text-sky-800">Download template</a>
+                    <div class="border-t border-gray-200 pt-6">
+                        <h3 class="text-lg font-medium text-gray-900 mb-4">Import Options</h3>
+                        
+                        <div class="space-y-4">
+                            <x-form.checkbox
+                                id="header_row"
+                                name="header_row"
+                                :checked="true"
+                                value="1"
+                                label="File contains header row"
+                                help-text="First row contains column names and should be skipped"
+                            />
+                            
+                            <x-form.checkbox
+                                id="update_existing"
+                                name="update_existing"
+                                :checked="true"
+                                value="1"
+                                label="Update existing customers"
+                                help-text="If a customer with the same email already exists, update their information"
+                            />
                         </div>
                     </div>
                     
                     <div class="flex justify-end space-x-3">
-                        <a href="{{ route('organization.customers.index') }}" class="px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500 transition-colors duration-200">
+                        <x-button 
+                            href="{{ route('organization.customers.index') }}" 
+                            variant="secondary"
+                        >
                             Cancel
-                        </a>
+                        </x-button>
                         
-                        <button type="submit" class="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-sky-600 hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500 transition-colors duration-200">
-                            <i class="fas fa-file-import mr-2"></i> Import Customers
-                        </button>
+                        <x-button 
+                            type="submit" 
+                            variant="primary"
+                            icon="fas fa-upload"
+                        >
+                            Import Customers
+                        </x-button>
                     </div>
                 </form>
-            </div>
+            </x-card>
         </div>
         
-        <div class="bg-white rounded-xl shadow-sm overflow-hidden">
-            <div class="px-6 py-5 border-b border-gray-200">
-                <h3 class="text-lg font-medium text-gray-900">
-                    Import Instructions
-                </h3>
-            </div>
+        <!-- Right: Instructions -->
+        <div>
+            <x-card title="Import Instructions" class="mb-6">
+                <ol class="list-decimal list-inside space-y-2 text-sm text-gray-600">
+                    <li>Download our template or prepare a CSV/Excel file with customer data.</li>
+                    <li>Make sure your file includes the required columns (name, email).</li>
+                    <li>Other columns like phone_number, address, etc. are optional.</li>
+                    <li>Upload your file using the form on the left.</li>
+                    <li>Choose your import options.</li>
+                    <li>Click Import to start the process.</li>
+                </ol>
+            </x-card>
             
-            <div class="p-6">
-                <div class="prose max-w-none">
-                    <h4>Follow these steps to import customers:</h4>
-                    
-                    <ol>
-                        <li>Prepare your CSV file with the required columns.</li>
-                        <li>Make sure your CSV is properly formatted (UTF-8 encoding recommended).</li>
-                        <li>Upload the file using the form above.</li>
-                        <li>Review any import errors that might appear.</li>
-                    </ol>
-                    
-                    <h4 class="mt-6">Notes:</h4>
-                    
-                    <ul>
-                        <li>Maximum file size: 2MB</li>
-                        <li>Duplicate emails will be identified during import.</li>
-                        <li>All customers will be associated with your organization.</li>
-                    </ul>
+            <x-card title="File Format" class="mb-6">
+                <p class="text-sm text-gray-600 mb-4">Your file should contain these columns (header row):</p>
+                
+                <div class="overflow-x-auto">
+                    <table class="min-w-full text-sm">
+                        <thead>
+                            <tr class="bg-gray-50">
+                                <th class="px-3 py-2 text-left font-medium text-gray-500">Column</th>
+                                <th class="px-3 py-2 text-left font-medium text-gray-500">Required</th>
+                                <th class="px-3 py-2 text-left font-medium text-gray-500">Example</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-200">
+                            <tr>
+                                <td class="px-3 py-2 text-gray-900">name</td>
+                                <td class="px-3 py-2 text-green-600">Yes</td>
+                                <td class="px-3 py-2 text-gray-600">John Doe</td>
+                            </tr>
+                            <tr>
+                                <td class="px-3 py-2 text-gray-900">email</td>
+                                <td class="px-3 py-2 text-green-600">Yes</td>
+                                <td class="px-3 py-2 text-gray-600">john@example.com</td>
+                            </tr>
+                            <tr>
+                                <td class="px-3 py-2 text-gray-900">phone_number</td>
+                                <td class="px-3 py-2 text-gray-600">No</td>
+                                <td class="px-3 py-2 text-gray-600">+1234567890</td>
+                            </tr>
+                            <tr>
+                                <td class="px-3 py-2 text-gray-900">address</td>
+                                <td class="px-3 py-2 text-gray-600">No</td>
+                                <td class="px-3 py-2 text-gray-600">123 Main St</td>
+                            </tr>
+                            <tr>
+                                <td class="px-3 py-2 text-gray-900">city</td>
+                                <td class="px-3 py-2 text-gray-600">No</td>
+                                <td class="px-3 py-2 text-gray-600">Jakarta</td>
+                            </tr>
+                            <tr>
+                                <td class="px-3 py-2 text-gray-900">state</td>
+                                <td class="px-3 py-2 text-gray-600">No</td>
+                                <td class="px-3 py-2 text-gray-600">DKI Jakarta</td>
+                            </tr>
+                            <tr>
+                                <td class="px-3 py-2 text-gray-900">postal_code</td>
+                                <td class="px-3 py-2 text-gray-600">No</td>
+                                <td class="px-3 py-2 text-gray-600">12345</td>
+                            </tr>
+                            <tr>
+                                <td class="px-3 py-2 text-gray-900">country</td>
+                                <td class="px-3 py-2 text-gray-600">No</td>
+                                <td class="px-3 py-2 text-gray-600">Indonesia</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
-            </div>
+            </x-card>
+            
+            <x-card>
+                <div class="flex flex-col items-center text-center">
+                    <i class="fas fa-file-download text-3xl text-sky-600 mb-2"></i>
+                    <h4 class="font-medium text-gray-900">Download Template</h4>
+                    <p class="text-sm text-gray-500 mb-4">Use our template file to ensure compatibility</p>
+                    
+                    <div class="flex flex-wrap justify-center gap-2">
+                        <x-button href="{{ route('organization.customers.download-template', ['format' => 'csv']) }}" variant="secondary" size="sm" icon="fas fa-file-csv">
+                            CSV Template
+                        </x-button>
+                        
+                        <x-button href="{{ route('organization.customers.download-template', ['format' => 'xlsx']) }}" variant="secondary" size="sm" icon="fas fa-file-excel">
+                            Excel Template
+                        </x-button>
+                    </div>
+                </div>
+            </x-card>
         </div>
     </div>
 </x-organization-layout>

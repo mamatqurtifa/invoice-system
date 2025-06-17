@@ -1,9 +1,16 @@
 <x-admin-layout>
     @section('title', 'Create Organization')
     
+    @php
+        $users = \App\Models\User::all();
+        $currentDateTime = '2025-06-17 09:47:25'; // Current UTC datetime
+        $currentUser = 'mamat'; // Current user login
+    @endphp
+    
     <div class="mb-6">
         <h2 class="text-2xl font-bold text-gray-900">Create Organization</h2>
         <p class="mt-1 text-sm text-gray-600">Add a new organization to the system</p>
+        <p class="text-sm text-gray-500">Current Date: {{ $currentDateTime }} | User: {{ $currentUser }}</p>
     </div>
     
     <div class="bg-white shadow rounded-lg overflow-hidden max-w-3xl mx-auto">

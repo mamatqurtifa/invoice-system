@@ -20,39 +20,39 @@ resources/views/
 │       ├── index.blade.php
 │       └── show.blade.php
 ├── organization/
-│   ├── dashboard.blade.php
-│   ├── profile/
+│   ├── dashboard.blade.php --- DONE
+│   ├── profile/ -------------- DONE
 │   │   ├── index.blade.php
 │   │   └── edit.blade.php
-│   ├── projects/
+│   ├── projects/ ------------- DONE
 │   │   ├── index.blade.php
 │   │   ├── create.blade.php
 │   │   ├── edit.blade.php
 │   │   ├── show.blade.php
 │   │   └── add-products.blade.php
-│   ├── products/
+│   ├── products/ ------------- DONE
 │   │   ├── index.blade.php
 │   │   ├── create.blade.php
 │   │   ├── edit.blade.php
 │   │   └── show.blade.php
-│   ├── customers/
+│   ├── customers/ ------------ DONE
 │   │   ├── index.blade.php
 │   │   ├── create.blade.php
 │   │   ├── edit.blade.php
 │   │   ├── show.blade.php
 │   │   └── import.blade.php
-│   ├── payment-methods/
+│   ├── payment-methods/ ------ DONE
 │   │   ├── index.blade.php
 │   │   ├── create.blade.php
 │   │   ├── edit.blade.php
 │   │   └── show.blade.php
-│   ├── invoice-templates/
+│   ├── invoice-templates/ ---- DONE
 │   │   ├── index.blade.php
 │   │   ├── create.blade.php
 │   │   ├── edit.blade.php
 │   │   ├── show.blade.php
 │   │   └── preview.blade.php
-│   ├── orders/
+│   ├── orders/ --------------- DONE
 │   │   ├── index.blade.php
 │   │   ├── create.blade.php
 │   │   ├── edit.blade.php
@@ -81,7 +81,7 @@ resources/views/
 │   ├── register.blade.php
 │   ├── forgot-password.blade.php
 │   └── reset-password.blade.php
-├── components/
+├── components/ --------------------------------------------------------------------------------------- COMPONENTS DONE
 │   ├── application-logo.blade.php
 │   ├── button.blade.php
 │   ├── card.blade.php
@@ -96,7 +96,7 @@ resources/views/
 │   ├── modal.blade.php
 │   ├── alert.blade.php
 │   └── pagination.blade.php
-├── layouts/
+├── layouts/ ------------------------------------------------------------------------------------------ JUST FIX THIS
 │   ├── app.blade.php
 │   ├── admin.blade.php
 │   ├── organization.blade.php

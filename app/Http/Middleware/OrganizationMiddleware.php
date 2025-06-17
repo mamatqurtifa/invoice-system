@@ -28,7 +28,7 @@ class OrganizationMiddleware
 
         // Check if user has an organization profile
         if (!$user->organization) {
-            return redirect()->route('organization.profile.create')
+            return redirect()->route('organization.profile.edit')
                 ->with('error', 'You need to complete your organization profile first.');
         }
 

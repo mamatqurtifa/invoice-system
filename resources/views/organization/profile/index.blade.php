@@ -3,7 +3,7 @@
     
     <div class="max-w-5xl mx-auto">
         <!-- Organization Profile Card -->
-        <div class="bg-white rounded-xl shadow-sm overflow-hidden mb-6">
+        <x-card class="mb-6">
             <div class="md:flex">
                 <!-- Logo/Banner Section -->
                 <div class="md:flex-shrink-0 bg-gradient-to-r from-sky-500 to-sky-600 text-white p-6 md:w-64 flex flex-col items-center justify-center relative">
@@ -25,9 +25,13 @@
                             <p class="mt-1 text-sm text-gray-500">Manage your organization's information</p>
                         </div>
                         <div>
-                            <a href="{{ route('organization.profile.edit') }}" class="inline-flex items-center px-4 py-2 bg-sky-600 border border-transparent shadow-sm text-sm font-medium rounded-md text-white hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500 transition-colors duration-200">
-                                <i class="fas fa-edit mr-2"></i> Edit Profile
-                            </a>
+                            <x-button 
+                                href="{{ route('organization.profile.edit') }}" 
+                                icon="fas fa-edit"
+                                variant="primary"
+                            >
+                                Edit Profile
+                            </x-button>
                         </div>
                     </div>
                     
@@ -81,107 +85,89 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </x-card>
         
         <!-- Account Information -->
-        <div class="bg-white rounded-xl shadow-sm overflow-hidden mb-6">
-            <div class="px-6 py-5 border-b border-gray-200">
-                <h3 class="text-lg font-medium text-gray-900">Account Information</h3>
-            </div>
-            
-            <div class="p-6">
-                <dl class="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-6">
-                    <div>
-                        <dt class="text-sm font-medium text-gray-500">Account Name</dt>
-                        <dd class="mt-1 text-sm text-gray-900">{{ $user->name }}</dd>
-                    </div>
-                    
-                    <div>
-                        <dt class="text-sm font-medium text-gray-500">Email Address</dt>
-                        <dd class="mt-1 text-sm text-gray-900">{{ $user->email }}</dd>
-                    </div>
-                    
-                    <div>
-                        <dt class="text-sm font-medium text-gray-500">Phone Number</dt>
-                        <dd class="mt-1 text-sm text-gray-900">{{ $user->phone_number ?? 'Not set' }}</dd>
-                    </div>
-                    
-                    <div>
-                        <dt class="text-sm font-medium text-gray-500">Account Status</dt>
-                        <dd class="mt-1">
-                            @if($user->status === 'active')
-                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                                    Active
-                                </span>
-                            @elseif($user->status === 'inactive')
-                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-100 text-gray-800">
-                                    Inactive
-                                </span>
-                            @elseif($user->status === 'suspended')
-                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
-                                    Suspended
-                                </span>
-                            @endif
-                        </dd>
-                    </div>
-                    
-                    <div>
-                        <dt class="text-sm font-medium text-gray-500">Member Since</dt>
-                        <dd class="mt-1 text-sm text-gray-900">{{ $user->created_at->format('F d, Y') }}</dd>
-                    </div>
-                    
-                    <div class="flex items-center">
-                        <dt class="text-sm font-medium text-gray-500">Password</dt>
-                        <dd class="ml-2">
-                            <span class="px-2 py-1 text-xs text-gray-500 bg-gray-100 rounded-md">
-                                ••••••••
-                            </span>
-                        </dd>
-                        <dd class="ml-2">
-                            <a href="{{ route('organization.profile.edit') }}#password" class="text-sm text-sky-600 hover:text-sky-900">Change</a>
-                        </dd>
-                    </div>
-                </dl>
-            </div>
-        </div>
+        <x-card title="Account Information" class="mb-6">
+            <dl class="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-6">
+                <div>
+                    <dt class="text-sm font-medium text-gray-500">Account Name</dt>
+                    <dd class="mt-1 text-sm text-gray-900">{{ $user->name }}</dd>
+                </div>
+                
+                <div>
+                    <dt class="text-sm font-medium text-gray-500">Email Address</dt>
+                    <dd class="mt-1 text-sm text-gray-900">{{ $user->email }}</dd>
+                </div>
+                
+                <div>
+                    <dt class="text-sm font-medium text-gray-500">Phone Number</dt>
+                    <dd class="mt-1 text-sm text-gray-900">{{ $user->phone_number ?? 'Not set' }}</dd>
+                </div>
+                
+                <div>
+                    <dt class="text-sm font-medium text-gray-500">Account Status</dt>
+                    <dd class="mt-1">
+                        @if($user->status === 'active')
+                            <x-badge color="green">Active</x-badge>
+                        @elseif($user->status === 'inactive')
+                            <x-badge color="gray">Inactive</x-badge>
+                        @elseif($user->status === 'suspended')
+                            <x-badge color="red">Suspended</x-badge>
+                        @endif
+                    </dd>
+                </div>
+                
+                <div>
+                    <dt class="text-sm font-medium text-gray-500">Member Since</dt>
+                    <dd class="mt-1 text-sm text-gray-900">{{ $user->created_at->format('F d, Y') }}</dd>
+                </div>
+                
+                <div class="flex items-center">
+                    <dt class="text-sm font-medium text-gray-500">Password</dt>
+                    <dd class="ml-2">
+                        <span class="px-2 py-1 text-xs text-gray-500 bg-gray-100 rounded-md">
+                            ••••••••
+                        </span>
+                    </dd>
+                    <dd class="ml-2">
+                        <a href="{{ route('organization.profile.edit') }}#password" class="text-sm text-sky-600 hover:text-sky-900">Change</a>
+                    </dd>
+                </div>
+            </dl>
+        </x-card>
         
         <!-- Organization Statistics -->
-        <div class="bg-white rounded-xl shadow-sm overflow-hidden">
-            <div class="px-6 py-5 border-b border-gray-200">
-                <h3 class="text-lg font-medium text-gray-900">Organization Statistics</h3>
-            </div>
-            
-            <div class="p-6">
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    <div class="bg-gray-50 p-4 rounded-lg text-center">
-                        <dt class="text-sm font-medium text-gray-500">Projects</dt>
-                        <dd class="mt-1 text-3xl font-semibold text-sky-600">{{ $organization->projects->count() }}</dd>
-                    </div>
-                    
-                    <div class="bg-gray-50 p-4 rounded-lg text-center">
-                        <dt class="text-sm font-medium text-gray-500">Products</dt>
-                        <dd class="mt-1 text-3xl font-semibold text-sky-600">{{ $organization->products->count() }}</dd>
-                    </div>
-                    
-                    <div class="bg-gray-50 p-4 rounded-lg text-center">
-                        <dt class="text-sm font-medium text-gray-500">Customers</dt>
-                        <dd class="mt-1 text-3xl font-semibold text-sky-600">{{ $organization->customers->count() }}</dd>
-                    </div>
-                    
-                    <div class="bg-gray-50 p-4 rounded-lg text-center">
-                        <dt class="text-sm font-medium text-gray-500">Total Orders</dt>
-                        <dd class="mt-1 text-3xl font-semibold text-sky-600">
-                            @php
-                                $orderCount = 0;
-                                foreach ($organization->projects as $project) {
-                                    $orderCount += $project->orders->count();
-                                }
-                            @endphp
-                            {{ $orderCount }}
-                        </dd>
-                    </div>
+        <x-card title="Organization Statistics">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="bg-gray-50 p-4 rounded-lg text-center">
+                    <dt class="text-sm font-medium text-gray-500">Projects</dt>
+                    <dd class="mt-1 text-3xl font-semibold text-sky-600">{{ $organization->projects->count() }}</dd>
+                </div>
+                
+                <div class="bg-gray-50 p-4 rounded-lg text-center">
+                    <dt class="text-sm font-medium text-gray-500">Products</dt>
+                    <dd class="mt-1 text-3xl font-semibold text-sky-600">{{ $organization->products->count() }}</dd>
+                </div>
+                
+                <div class="bg-gray-50 p-4 rounded-lg text-center">
+                    <dt class="text-sm font-medium text-gray-500">Customers</dt>
+                    <dd class="mt-1 text-3xl font-semibold text-sky-600">{{ $organization->customers->count() }}</dd>
+                </div>
+                
+                <div class="bg-gray-50 p-4 rounded-lg text-center">
+                    <dt class="text-sm font-medium text-gray-500">Total Orders</dt>
+                    <dd class="mt-1 text-3xl font-semibold text-sky-600">
+                        @php
+                            $orderCount = 0;
+                            foreach ($organization->projects as $project) {
+                                $orderCount += $project->orders->count();
+                            }
+                        @endphp
+                        {{ $orderCount }}
+                    </dd>
                 </div>
             </div>
-        </div>
+        </x-card>
     </div>
 </x-organization-layout>

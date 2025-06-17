@@ -8,76 +8,179 @@
         ];
     @endphp
     
-    <div class="bg-white rounded-xl shadow-sm overflow-hidden max-w-3xl mx-auto">
-        <div class="px-6 py-5 border-b border-gray-200">
-            <h3 class="text-lg font-medium text-gray-900">
-                Create New Customer
-            </h3>
-        </div>
-        
-        <form action="{{ route('organization.customers.store') }}" method="POST" class="p-6">
+    <x-card class="max-w-3xl mx-auto">
+        <form action="{{ route('organization.customers.store') }}" method="POST">
             @csrf
             
             <div class="space-y-6">
-                <!-- Name -->
-                <div>
-                    <label for="name" class="block text-sm font-medium text-gray-700">Name <span class="text-red-500">*</span></label>
-                    <div class="mt-1">
-                        <input type="text" name="name" id="name" value="{{ old('name') }}" required
-                            class="block w-full rounded-md border-gray-300 shadow-sm focus:border-sky-500 focus:ring-sky-500 sm:text-sm">
-                    </div>
-                    @error('name')
-                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                    @enderror
-                </div>
+                <h3 class="text-lg font-medium text-gray-900 border-b pb-4">Customer Information</h3>
                 
-                <!-- Email -->
-                <div>
-                    <label for="email" class="block text-sm font-medium text-gray-700">Email Address</label>
-                    <div class="mt-1">
-                        <input type="email" name="email" id="email" value="{{ old('email') }}"
-                            class="block w-full rounded-md border-gray-300 shadow-sm focus:border-sky-500 focus:ring-sky-500 sm:text-sm">
-                    </div>
-                    @error('email')
-                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                    @enderror
-                    <p class="mt-1 text-xs text-gray-500">We'll never share your email with anyone else.</p>
-                </div>
-                
-                <!-- Phone Number -->
-                <div>
-                    <label for="phone_number" class="block text-sm font-medium text-gray-700">Phone Number</label>
-                    <div class="mt-1">
-                        <input type="text" name="phone_number" id="phone_number" value="{{ old('phone_number') }}"
-                            class="block w-full rounded-md border-gray-300 shadow-sm focus:border-sky-500 focus:ring-sky-500 sm:text-sm">
-                    </div>
-                    @error('phone_number')
-                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                    @enderror
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Name -->
+                    <x-form.input 
+                        id="name"
+                        name="name"
+                        label="Full Name"
+                        :value="old('name')"
+                        required
+                        :error="$errors->first('name')"
+                    />
+                    
+                    <!-- Email -->
+                    <x-form.input 
+                        type="email"
+                        id="email"
+                        name="email"
+                        label="Email Address"
+                        :value="old('email')"
+                        :error="$errors->first('email')"
+                    />
+                    
+                    <!-- Phone -->
+                    <x-form.input 
+                        id="phone_number"
+                        name="phone_number"
+                        label="Phone Number"
+                        :value="old('phone_number')"
+                        :error="$errors->first('phone_number')"
+                    />
+                    
+                    <!-- Gender -->
+                    <x-form.select
+                        id="gender"
+                        name="gender"
+                        label="Gender"
+                        :options="[
+                            'male' => 'Male',
+                            'female' => 'Female',
+                            'other' => 'Other'
+                        ]"
+                        :value="old('gender')"
+                        placeholder="Select Gender"
+                        :error="$errors->first('gender')"
+                    />
+                    
+                    <!-- Birth Date -->
+                    <x-form.input 
+                        type="date"
+                        id="birthdate"
+                        name="birthdate"
+                        label="Birth Date"
+                        :value="old('birthdate')"
+                        :error="$errors->first('birthdate')"
+                    />
+                    
+                    <!-- ID Number -->
+                    <x-form.input 
+                        id="id_number"
+                        name="id_number"
+                        label="ID Number"
+                        help-text="National identity card number, passport number, etc."
+                        :value="old('id_number')"
+                        :error="$errors->first('id_number')"
+                    />
                 </div>
                 
                 <!-- Address -->
-                <div>
-                    <label for="address" class="block text-sm font-medium text-gray-700">Address</label>
-                    <div class="mt-1">
-                        <textarea name="address" id="address" rows="3" 
-                            class="block w-full rounded-md border-gray-300 shadow-sm focus:border-sky-500 focus:ring-sky-500 sm:text-sm">{{ old('address') }}</textarea>
+                <div class="border-t border-gray-200 pt-6">
+                    <h3 class="text-lg font-medium text-gray-900 mb-4">Address Information</h3>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="md:col-span-2">
+                            <x-form.textarea 
+                                id="address"
+                                name="address"
+                                label="Full Address"
+                                rows="3"
+                                :error="$errors->first('address')"
+                            >{{ old('address') }}</x-form.textarea>
+                        </div>
+                        
+                        <x-form.input 
+                            id="city"
+                            name="city"
+                            label="City"
+                            :value="old('city')"
+                            :error="$errors->first('city')"
+                        />
+                        
+                        <x-form.input 
+                            id="state"
+                            name="state"
+                            label="State/Province"
+                            :value="old('state')"
+                            :error="$errors->first('state')"
+                        />
+                        
+                        <x-form.input 
+                            id="postal_code"
+                            name="postal_code"
+                            label="Postal Code"
+                            :value="old('postal_code')"
+                            :error="$errors->first('postal_code')"
+                        />
+                        
+                        <x-form.input 
+                            id="country"
+                            name="country"
+                            label="Country"
+                            :value="old('country', 'Indonesia')"
+                            :error="$errors->first('country')"
+                        />
                     </div>
-                    @error('address')
-                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                    @enderror
                 </div>
                 
-                <div class="flex items-center justify-end space-x-3">
-                    <a href="{{ route('organization.customers.index') }}" class="px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500 transition-colors duration-200">
-                        Cancel
-                    </a>
+                <!-- Additional Information -->
+                <div class="border-t border-gray-200 pt-6">
+                    <h3 class="text-lg font-medium text-gray-900 mb-4">Additional Information</h3>
                     
-                    <button type="submit" class="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-sky-600 hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500 transition-colors duration-200">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <x-form.select
+                            id="source"
+                            name="source"
+                            label="Customer Source"
+                            :options="[
+                                'online' => 'Online (website, social media)',
+                                'referral' => 'Referral',
+                                'direct' => 'Direct contact',
+                                'exhibition' => 'Exhibition/Trade show',
+                                'other' => 'Other'
+                            ]"
+                            :value="old('source')"
+                            placeholder="Select Source"
+                            :error="$errors->first('source')"
+                        />
+                        
+                        <div class="md:col-span-2">
+                            <x-form.textarea 
+                                id="notes"
+                                name="notes"
+                                label="Notes"
+                                rows="3"
+                                help-text="Internal notes about this customer (not visible to customer)"
+                                :error="$errors->first('notes')"
+                            >{{ old('notes') }}</x-form.textarea>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="flex justify-end space-x-3">
+                    <x-button 
+                        href="{{ route('organization.customers.index') }}" 
+                        variant="secondary"
+                    >
+                        Cancel
+                    </x-button>
+                    
+                    <x-button 
+                        type="submit" 
+                        variant="primary"
+                        icon="fas fa-save"
+                    >
                         Create Customer
-                    </button>
+                    </x-button>
                 </div>
             </div>
         </form>
-    </div>
+    </x-card>
 </x-organization-layout>

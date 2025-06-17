@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Organization\DashboardController as OrganizationDashboardController;
 use App\Http\Controllers\ProfileController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -25,10 +26,10 @@ Route::get('/', function () {
 require __DIR__.'/auth.php';
 
 // Protected routes
-Route::middleware(['auth', 'verified'])->group(function () {
+Route::middleware(['auth'])->group(function () {
     // Redirect to appropriate dashboard based on user role
     Route::get('/dashboard', function () {
-        if (auth()->user()->role === 'admin') {
+        if (Auth::user()->role === 'admin') {
             return redirect()->route('admin.dashboard');
         } else {
             return redirect()->route('organization.dashboard');
@@ -60,10 +61,9 @@ Route::get('/language/{locale}', function ($locale) {
     }
     
     session()->put('locale', $locale);
-    
     // Update user language setting if logged in
-    if (auth()->check()) {
-        $user = auth()->user();
+    if (Auth::check()) {
+        $user = Auth::user();
         $languageSetting = $user->languageSetting;
         
         if ($languageSetting) {
